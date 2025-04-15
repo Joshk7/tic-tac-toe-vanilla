@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+        <link
+            rel="icon"
+            type="image/png"
+            sizes="32x32"
+            href="./assets/favicon-32x32.png"
+        />
+
+        <title>Frontend Mentor | Tic Tac Toe</title>
+
+        <link rel="stylesheet" href="style.css" />
+        <script src="script.js" defer></script>
+    </head>
+    <body>
+        <main>
+            <section id="new-game-menu">
+                <!-- New game menu start -->
+                <div class="flex">
+                    <img src="/assets/icon-x.svg" alt="X" />
+                    <img src="/assets/icon-o.svg" alt="O" />
+                </div>
+                <div>
+                    <span>Pick player 1's mark</span>
+                    <span>Remember: X goes first</span>
+                </div>
+                <div>
+                    <button>New Game (vs CPU)</button>
+                    <button>New Game (vs player)</button>
+                </div>
+                <!-- New game menu end -->
+            </section>
+            <section class="game-board hidden">
+                <!-- Game board start -->
+                <div>
+                    <div>
+                        <div>
+                            <img src="/assets/icon-x.svg" alt="X" />
+                            <img src="/assets/icon-o.svg" alt="O" />
+                        </div>
+                        <div>
+                            <img id="turn-x" src="/assets/icon-x.svg" alt="X" />
+                            <img id="turn-o" src="/assets/icon-o.svg" alt="O" />
+                            <span>Turn</span>
+                        </div>
+                        <button>
+                            <img src="/assets/icon-restart.svg" alt="Restart" />
+                        </button>
+                    </div>
+                    <div>
+                        <div id="board">
+                            <button></button>
+                            <button></button>
+                            <button></button>
+                            <button></button>
+                            <button></button>
+                            <button></button>
+                            <button></button>
+                            <button></button>
+                            <button></button>
+                        </div>
+                        <div class="score-board">
+                            <div>
+                                <p id="x-single">
+                                    X <span id="x-single-you">(YOU)</span
+                                    ><span id="x-single-cpu">(CPU)</span>
+                                </p>
+                                <p id="x-multi">
+                                    X <span id="x-multi-p2">P2</span>
+                                    <span id="x-multi-p1">P1</span>
+                                </p>
+                                <p id="x-score">0</p>
+                            </div>
+                            <div>
+                                <p>Ties</p>
+                                <p id="ties-score">0</p>
+                            </div>
+                            <div>
+                                <p id="o-single">
+                                    O <span id="o-single-cpu">(CPU)</span
+                                    ><span id="o-single-you">(YOU)</span>
+                                </p>
+                                <p id="o-multi">
+                                    O <span id="o-multi-p1">P1</span>
+                                    <span id="o-multi-p2">P2</span>
+                                </p>
+                                <p id="o-score">0</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+        <dialog id="modal" class="modal">
+            <div class="modal__content">
+                <div id="modal-outcome">
+                    <p>
+                        <span id="modal-single-loss">Oh no, you lost</span>
+                        <span id="modal-single-win">You won!</span>
+                        <span id="modal-multi-p1">Player 1 wins!</span>
+                        <span id="modal-multi-p2">Player 2 wins!</span>
+                    </p>
+                    <div>
+                        <img src="/assets/icon-x.svg" alt="X" />
+                        <img src="/assets/icon-o.svg" alt="O" />
+                        <p>Takes the round</p>
+                    </div>
+                </div>
+                <div id="modal-tied">
+                    <p>Round tied</p>
+                </div>
+                <div>
+                    <div id="modal-outcome-buttons">
+                        <button id="modal-quit">Quit</button>
+                        <button id="modal-next-round">Next round</button>
+                    </div>
+                    <div id="modal-restart-buttons">
+                        <button id="modal-cancel">No, cancel</button>
+                        <button id="modal-restart">Yes, restart</button>
+                    </div>
+                </div>
+            </div>
+        </dialog>
+    </body>
+</html>
