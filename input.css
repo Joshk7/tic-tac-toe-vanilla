@@ -99,13 +99,6 @@ h6 {
 }
 
 
-.flex {
-    display: flex;
-}
-
-.flex-col {
-    flex-direction: column;
-}
 
 .hidden {
     display: none;

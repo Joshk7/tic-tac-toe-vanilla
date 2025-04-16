@@ -13,16 +13,16 @@
 
         <title>Frontend Mentor | Tic Tac Toe</title>
 
-        <link rel="stylesheet" href="style.css" />
+        <link rel="stylesheet" href="output.css" />
         <script src="script.js" defer></script>
     </head>
-    <body>
-        <main>
+    <body class="min-h-full">
+        <main class="h-full">
             <section id="new-game-menu">
                 <!-- New game menu start -->
                 <div class="flex">
-                    <img src="/assets/icon-x.svg" alt="X" />
-                    <img src="/assets/icon-o.svg" alt="O" />
+                    <img src="/src/assets/icon-x.svg" alt="X" />
+                    <img src="/src/assets/icon-o.svg" alt="O" />
                 </div>
                 <div>
                     <span>Pick player 1's mark</span>
@@ -39,16 +39,27 @@
                 <div>
                     <div>
                         <div>
-                            <img src="/assets/icon-x.svg" alt="X" />
-                            <img src="/assets/icon-o.svg" alt="O" />
+                            <img src="/src/assets/icon-x.svg" alt="X" />
+                            <img src="/src/assets/icon-o.svg" alt="O" />
                         </div>
                         <div>
-                            <img id="turn-x" src="/assets/icon-x.svg" alt="X" />
-                            <img id="turn-o" src="/assets/icon-o.svg" alt="O" />
+                            <img
+                                id="turn-x"
+                                src="/src/assets/icon-x.svg"
+                                alt="X"
+                            />
+                            <img
+                                id="turn-o"
+                                src="/src/assets/icon-o.svg"
+                                alt="O"
+                            />
                             <span>Turn</span>
                         </div>
                         <button>
-                            <img src="/assets/icon-restart.svg" alt="Restart" />
+                            <img
+                                src="/src/assets/icon-restart.svg"
+                                alt="Restart"
+                            />
                         </button>
                     </div>
                     <div>
@@ -105,8 +116,8 @@
                         <span id="modal-multi-p2">Player 2 wins!</span>
                     </p>
                     <div>
-                        <img src="/assets/icon-x.svg" alt="X" />
-                        <img src="/assets/icon-o.svg" alt="O" />
+                        <img src="/src/assets/icon-x.svg" alt="X" />
+                        <img src="/src/assets/icon-o.svg" alt="O" />
                         <p>Takes the round</p>
                     </div>
                 </div>
