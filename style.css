@@ -184,6 +184,20 @@ main {
     cursor: pointer;
 }
 
+.new__toggle--button[data-selected="true"] {
+    background: var(--silver);
+}
+
+.new__toggle--icon {
+    filter: brightness(0) saturate(100%) invert(81%) sepia(15%) saturate(295%)
+        hue-rotate(153deg) brightness(90%) contrast(93%);
+}
+
+.new__toggle--button[data-selected="true"] .new__toggle--icon {
+    filter: brightness(0) saturate(100%) invert(17%) sepia(18%) saturate(765%)
+        hue-rotate(157deg) brightness(94%) contrast(102%);
+}
+
 .new__symbol {
     margin-block-start: 1rem;
     text-transform: uppercase;
@@ -299,17 +313,22 @@ main {
 .board {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(3, 1fr);
     gap: 1.25rem;
     aspect-ratio: 1 / 1;
 }
 
 .board__button {
+    position: relative;
     background: var(--semi-dark-navy);
     border: none;
     border-radius: 0.625rem;
+    padding: 1.5rem;
     margin-block-end: 0.5rem;
     box-shadow: 0 0.5rem 0 0 #10212a;
     cursor: pointer;
+    display: grid;
+    place-items: center;
 }
 
 .board__button:hover,
@@ -341,15 +360,6 @@ main {
     letter-spacing: 0.078125rem;
 }
 
-.dark-navy-filter {
-    filter: brightness(0) saturate(100%) invert(17%) sepia(18%) saturate(765%)
-        hue-rotate(157deg) brightness(94%) contrast(102%);
-}
-
-.silver-background {
-    background: var(--silver);
-}
-
 .silver-filter {
     filter: brightness(0) saturate(100%) invert(81%) sepia(15%) saturate(295%)
         hue-rotate(153deg) brightness(90%) contrast(93%);
@@ -357,6 +367,15 @@ main {
 
 .transparent-background {
     background: none;
+}
+
+.dark-navy-filter {
+    filter: brightness(0) saturate(100%) invert(17%) sepia(18%) saturate(765%)
+        hue-rotate(157deg) brightness(94%) contrast(102%);
+}
+
+.silver-background {
+    background: var(--silver);
 }
 
 .hidden {

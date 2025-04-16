@@ -23,7 +23,7 @@
     </head>
     <body>
         <main>
-            <section id="new-game-menu" class="new hidden">
+            <section id="new-game-menu" class="new">
                 <!-- New game menu start -->
                 <div class="new__top">
                     <img
@@ -44,18 +44,23 @@
                 <div class="new__middle main-shadow">
                     <p class="new__player text-xs">Pick player 1's mark</p>
                     <div class="new__toggle">
-                        <button class="new__toggle--button">
+                        <button id="toggle-x" class="new__toggle--button" data-selected="false">
                             <img
-                                class="silver-filter"
+                                id="toggle-x-icon"
+                                class="new__toggle--icon"
                                 src="/assets/icon-x.svg"
                                 alt="X"
                                 width="32"
                                 height="32"
                             />
                         </button>
-                        <button class="new__toggle--button silver-background">
+                        <button
+                            id="toggle-o"
+                            class="new__toggle--button"
+                            data-selected="true"
+                        >
                             <img
-                                class="dark-navy-filter"
+                                class="new__toggle--icon"
                                 src="/assets/icon-o.svg"
                                 alt="O"
                                 width="32"
@@ -66,20 +71,16 @@
                     <p class="new__symbol text-body">Remember: X goes first</p>
                 </div>
                 <div class="new__bottom">
-                    <button
-                        class="new__bottom--single text-xs yellow-shadow"
-                    >
+                    <button id="new-game-single" class="new__bottom--single text-xs yellow-shadow">
                         New Game (vs CPU)
                     </button>
-                    <button
-                        class="new__bottom--multi text-xs blue-shadow"
-                    >
+                    <button id="new-game-multi" class="new__bottom--multi text-xs blue-shadow">
                         New Game (vs player)
                     </button>
                 </div>
                 <!-- New game menu end -->
             </section>
-            <section id="play-game" class="play">
+            <section id="play-game" class="play hidden">
                 <!-- Game board start -->
                 <div class="play__top">
                     <div class="play__top--symbols">
