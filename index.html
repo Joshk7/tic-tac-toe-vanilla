@@ -12,95 +12,163 @@
         />
 
         <title>Frontend Mentor | Tic Tac Toe</title>
-
-        <link rel="stylesheet" href="output.css" />
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap"
+            rel="stylesheet"
+        />
+        <link rel="stylesheet" href="style.css" />
         <script src="script.js" defer></script>
     </head>
-    <body class="min-h-full">
-        <main class="h-full">
-            <section id="new-game-menu">
+    <body>
+        <main>
+            <section id="new-game-menu" class="new hidden">
                 <!-- New game menu start -->
-                <div class="flex">
-                    <img src="/src/assets/icon-x.svg" alt="X" />
-                    <img src="/src/assets/icon-o.svg" alt="O" />
+                <div class="new__top">
+                    <img
+                        class="new__icon"
+                        src="/assets/icon-x.svg"
+                        alt="X"
+                        width="32"
+                        height="32"
+                    />
+                    <img
+                        class="new__icon"
+                        src="/assets/icon-o.svg"
+                        alt="O"
+                        width="32"
+                        height="32"
+                    />
                 </div>
-                <div>
-                    <span>Pick player 1's mark</span>
-                    <span>Remember: X goes first</span>
-                </div>
-                <div>
-                    <button>New Game (vs CPU)</button>
-                    <button>New Game (vs player)</button>
-                </div>
-                <!-- New game menu end -->
-            </section>
-            <section class="game-board hidden">
-                <!-- Game board start -->
-                <div>
-                    <div>
-                        <div>
-                            <img src="/src/assets/icon-x.svg" alt="X" />
-                            <img src="/src/assets/icon-o.svg" alt="O" />
-                        </div>
-                        <div>
+                <div class="new__middle main-shadow">
+                    <p class="new__player text-xs">Pick player 1's mark</p>
+                    <div class="new__toggle">
+                        <button class="new__toggle--button">
                             <img
-                                id="turn-x"
-                                src="/src/assets/icon-x.svg"
+                                class="silver-filter"
+                                src="/assets/icon-x.svg"
                                 alt="X"
+                                width="32"
+                                height="32"
                             />
+                        </button>
+                        <button class="new__toggle--button silver-background">
                             <img
-                                id="turn-o"
-                                src="/src/assets/icon-o.svg"
+                                class="dark-navy-filter"
+                                src="/assets/icon-o.svg"
                                 alt="O"
-                            />
-                            <span>Turn</span>
-                        </div>
-                        <button>
-                            <img
-                                src="/src/assets/icon-restart.svg"
-                                alt="Restart"
+                                width="32"
+                                height="32"
                             />
                         </button>
                     </div>
-                    <div>
-                        <div id="board">
-                            <button></button>
-                            <button></button>
-                            <button></button>
-                            <button></button>
-                            <button></button>
-                            <button></button>
-                            <button></button>
-                            <button></button>
-                            <button></button>
+                    <p class="new__symbol text-body">Remember: X goes first</p>
+                </div>
+                <div class="new__bottom">
+                    <button
+                        class="new__bottom--single text-xs yellow-shadow"
+                    >
+                        New Game (vs CPU)
+                    </button>
+                    <button
+                        class="new__bottom--multi text-xs blue-shadow"
+                    >
+                        New Game (vs player)
+                    </button>
+                </div>
+                <!-- New game menu end -->
+            </section>
+            <section id="play-game" class="play">
+                <!-- Game board start -->
+                <div class="play__top">
+                    <div class="play__top--symbols">
+                        <img
+                            class="play__top--icon"
+                            src="/assets/icon-x.svg"
+                            alt="X"
+                            width="32"
+                            height="32"
+                        />
+                        <img
+                            class="play__top--icon"
+                            src="/assets/icon-o.svg"
+                            alt="O"
+                            width="32"
+                            height="32"
+                        />
+                    </div>
+                    <div class="play__turn third-shadow">
+                        <img
+                            id="turn-x"
+                            class="turn__icon silver-filter hidden"
+                            src="/assets/icon-x.svg"
+                            alt="X"
+                            width="16"
+                            height="16"
+                        />
+                        <img
+                            id="turn-o"
+                            class="turn__icon silver-filter"
+                            src="/assets/icon-o.svg"
+                            alt="O"
+                            width="16"
+                            height="16"
+                        />
+                        <span class="play__turn--text text-body">Turn</span>
+                    </div>
+                    <button class="restart gray-shadow">
+                        <img
+                            class="restart__icon"
+                            src="/assets/icon-restart.svg"
+                            alt="Restart"
+                            width="16"
+                            height="16"
+                        />
+                    </button>
+                </div>
+                <div class="play__bottom">
+                    <div id="board" class="board">
+                        <button class="board__button"></button>
+                        <button class="board__button"></button>
+                        <button class="board__button"></button>
+                        <button class="board__button"></button>
+                        <button class="board__button"></button>
+                        <button class="board__button"></button>
+                        <button class="board__button"></button>
+                        <button class="board__button"></button>
+                        <button class="board__button"></button>
+                    </div>
+                    <div class="scoreboard">
+                        <div class="scoreboard__card light-blue">
+                            <p id="x-single">
+                                X <span id="x-single-you">(YOU)</span
+                                ><span class="hidden" id="x-single-cpu"
+                                    >(CPU)</span
+                                >
+                            </p>
+                            <p id="x-multi" class="hidden">
+                                X <span id="x-multi-p2">P2</span>
+                                <span class="hidden" id="x-multi-p1">P1</span>
+                            </p>
+                            <p id="x-score" class="score">0</p>
                         </div>
-                        <div class="score-board">
-                            <div>
-                                <p id="x-single">
-                                    X <span id="x-single-you">(YOU)</span
-                                    ><span id="x-single-cpu">(CPU)</span>
-                                </p>
-                                <p id="x-multi">
-                                    X <span id="x-multi-p2">P2</span>
-                                    <span id="x-multi-p1">P1</span>
-                                </p>
-                                <p id="x-score">0</p>
-                            </div>
-                            <div>
-                                <p>Ties</p>
-                                <p id="ties-score">0</p>
-                            </div>
-                            <div>
-                                <p id="o-single">
-                                    O <span id="o-single-cpu">(CPU)</span
-                                    ><span id="o-single-you">(YOU)</span>
-                                </p>
-                                <p id="o-multi">
-                                    O <span id="o-multi-p1">P1</span>
-                                    <span id="o-multi-p2">P2</span>
-                                </p>
-                                <p id="o-score">0</p>
-                            </div>
+                        <div class="scoreboard__card silver-background">
+                            <p>Ties</p>
+                            <p id="ties-score" class="score">0</p>
+                        </div>
+                        <div class="scoreboard__card light-yellow">
+                            <p id="o-single">
+                                O <span id="o-single-cpu">(CPU)</span
+                                ><span class="hidden" id="o-single-you"
+                                    >(YOU)</span
+                                >
+                            </p>
+                            <p id="o-multi" class="hidden">
+                                O <span id="o-multi-p1">P1</span>
+                                <span class="hidden" id="o-multi-p2">P2</span>
+                            </p>
+                            <p id="o-score" class="score">0</p>
                         </div>
                     </div>
                 </div>
@@ -116,8 +184,8 @@
                         <span id="modal-multi-p2">Player 2 wins!</span>
                     </p>
                     <div>
-                        <img src="/src/assets/icon-x.svg" alt="X" />
-                        <img src="/src/assets/icon-o.svg" alt="O" />
+                        <img src="/assets/icon-x.svg" alt="X" />
+                        <img src="/assets/icon-o.svg" alt="O" />
                         <p>Takes the round</p>
                     </div>
                 </div>
