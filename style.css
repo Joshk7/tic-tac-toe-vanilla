@@ -312,8 +312,8 @@ main {
 
 .board {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    grid-template-rows: repeat(3, 1fr);
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-template-rows: repeat(3, minmax(0, 1fr));
     gap: 1.25rem;
     aspect-ratio: 1 / 1;
 }
@@ -324,20 +324,37 @@ main {
     border: none;
     border-radius: 0.625rem;
     padding: 1.5rem;
-    margin-block-end: 0.5rem;
+    /* margin-block-end: 0.5rem; */
     box-shadow: 0 0.5rem 0 0 #10212a;
     cursor: pointer;
     display: grid;
     place-items: center;
 }
 
-.board__button:hover,
-.board__button:focus {
+.board__button:not(:disabled):hover {
     box-shadow: none;
     transform: translateY(0.25rem);
 }
 
+.board__button:disabled {
+    cursor: not-allowed;
+}
+
+.board__button[data-clicked="true"] {
+    box-shadow: none;
+    transform: translateY(0.25rem);
+}
+
+.board__button--outline {
+    opacity: 0;
+}
+
+.board__button:hover .board__button--outline {
+    opacity: 1;
+}
+
 .scoreboard {
+    margin-block-start: 0.5rem;
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     column-gap: 1.25rem;

@@ -68,7 +68,7 @@
                             />
                         </button>
                     </div>
-                    <p class="new__symbol text-body">Remember: X goes first</p>
+                    <p class="new__symbol text-body">Remember: <span id="choose-x" class="hidden">X</span><span id="choose-o">O</span> goes first</p>
                 </div>
                 <div class="new__bottom">
                     <button id="new-game-single" class="new__bottom--single text-xs yellow-shadow">
@@ -118,7 +118,7 @@
                         />
                         <span class="play__turn--text text-body">Turn</span>
                     </div>
-                    <button class="restart gray-shadow">
+                    <button id="restart-game" class="restart gray-shadow">
                         <img
                             class="restart__icon"
                             src="/assets/icon-restart.svg"
