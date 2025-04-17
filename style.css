@@ -51,11 +51,8 @@ body {
     width: 100%;
 }
 
-body {
-    padding: 1.5rem;
-}
-
 main {
+    padding: 1.5rem;
     min-height: 100%;
     width: 100%;
     display: flex;
@@ -324,7 +321,6 @@ main {
     border: none;
     border-radius: 0.625rem;
     padding: 1.5rem;
-    /* margin-block-end: 0.5rem; */
     box-shadow: 0 0.5rem 0 0 #10212a;
     cursor: pointer;
     display: grid;
@@ -375,6 +371,25 @@ main {
 .score {
     font: bold 1.25rem / normal "Outfit";
     letter-spacing: 0.078125rem;
+}
+
+.modal {
+    background: transparent;
+    margin-block: auto;
+    width: 100%;
+    max-width: none;
+    border: none;
+}
+
+.modal__content {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    background: var(--semi-dark-navy);
+}
+
+.modal::backdrop {
+    background: rgba(0, 0, 0, 0.5);
 }
 
 .silver-filter {

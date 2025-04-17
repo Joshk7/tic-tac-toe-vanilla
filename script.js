@@ -1,3 +1,5 @@
+import { validateBoard } from "./board.js";
+
 const newGameMenu = document.getElementById("new-game-menu");
 const toggleX = document.getElementById("toggle-x");
 const toggleO = document.getElementById("toggle-o");
@@ -13,13 +15,21 @@ const restartGame = document.getElementById("restart-game");
 const board = document.getElementById("board");
 const boardCells = [...board.children];
 
-// content
+const modal = document.getElementById("modal");
+const modalOutcome = document.getElementById("modal-outcome");
+const modalButtons = document.getElementById("modal-buttons");
 
-let isO = true;
+let original = "O";
+let player = "O";
 let isSingle = true;
 let isPlaying = false;
 let isComputer = false;
 const boardState = ["", "", "", "", "", "", "", "", ""];
+const scores = {
+    X: 0,
+    O: 0,
+    Tie: 0,
+};
 
 const filledTags = {
     X: "/assets/icon-x.svg",
@@ -38,8 +48,17 @@ const renderBoard = () => {
                 filledTags[boardState[index]]
             }" alt="${boardState[index]}" />`;
         } else {
-            const symbol = isO ? "O" : "X";
-            cell.innerHTML = `<img class="board__button--outline" src="${outlineTags[symbol]}" alt="${symbol}" />`;
+            cell.innerHTML = `
+                <img class="board__button--outline" src="${outlineTags[player]}" alt="${player}" />
+            `;
+        }
+    });
+};
+
+const removeOutlines = () => {
+    boardCells.forEach((cell, index) => {
+        if (boardState[index] === "") {
+            cell.innerHTML = "";
         }
     });
 };
@@ -66,9 +85,92 @@ const enableBoard = () => {
     });
 };
 
-const setO = (o) => {
-    isO = o;
-    if (isO) {
+const singleEndStates = {
+    X: {
+        X: "You won!",
+        O: "Oh no, you lost...",
+    },
+    O: {
+        X: "Oh no, you lost...",
+        O: "You won!",
+    },
+};
+
+const multiEndStates = {
+    X: {
+        X: "Player 1 wins!",
+        O: "Player 2 wins!",
+    },
+    O: {
+        X: "Player 2 wins!",
+        O: "Player 1 wins!",
+    },
+};
+
+const renderModal = (outcome) => {
+    if (outcome === "In Progress") {
+        modalOutcome.innerHTML = `<span>Restart Game?</span>`;
+        modalButtons.innerHTML = `
+            <button onclick="handleCancel()">
+                No, cancel
+            </button>
+            <button onclick="handleRestart()">
+                Yes, restart
+            </button>
+        `;
+    } else {
+        if (outcome === "Tie") {
+            modalOutcome.innerHTML = `
+                <span>Round Tied</span>
+            `;
+        } else {
+            if (isSingle) {
+                modalOutcome.innerHTML = `
+                    <span>${singleEndStates[original][outcome]}</span>
+                    <div>
+                    <img src="${filledTags[outcome]}" alt="${outcome}" />
+                        <p>Takes the round</p>
+                    </div>
+                `;
+            } else {
+                modalOutcome.innerHTML = `
+                    <span>${multiEndStates[original][outcome]}</span>
+                    <div>
+                        <img src="${filledTags[outcome]}" alt="${outcome}" />
+                        <p>Takes the round</p>
+                    </div>
+                `;
+            }
+        }
+
+        modalButtons.innerHTML = `
+            <button onclick="handleQuit()">
+                Quit
+            </button>
+            <button onclick="handleNextRound()">
+                Next round
+            </button>
+        `;
+    }
+};
+
+const openModal = () => {
+    modal.showModal();
+};
+
+const closeModal = () => {
+    modal.close();
+};
+
+const renderScoreBoard = () => {};
+
+const setOriginal = (o) => {
+    original = o;
+};
+
+const setPlayer = (newPlayer) => {
+    player = newPlayer;
+    if (player === "O") {
         toggleX.dataset.selected = false;
         toggleO.dataset.selected = true;
         chooseX.classList.add("hidden");
@@ -102,35 +204,29 @@ const setPlaying = (playing) => {
 
 const setComputer = (computer) => {
     isComputer = computer;
+    removeOutlines();
+    disableBoard();
     if (isComputer) {
-        disableBoard();
         setTimeout(() => {
-            // computer move
-            const openIndices = [];
-            boardState.forEach((cell, index) => {
-                if (cell === "") {
-                    openIndices.push(index);
-                }
-            });
-            const randomIndex =
-                openIndices[Math.floor(Math.random() * openIndices.length)];
-            boardState[randomIndex] = isO ? "O" : "X";
-            boardCells[randomIndex].dataset.clicked = true;
-            setO(!isO);
-            renderBoard();
-            enableBoard();
-            // computer move
+            computerMove();
         }, 500);
         isComputer = false;
     }
 };
 
+const updateScore = (score) => {
+    scores[score]++;
+    renderScoreBoard();
+};
+
 const handleToggleX = () => {
-    setO(false);
+    setPlayer("X");
+    setOriginal("X");
 };
 
 const handleToggleO = () => {
-    setO(true);
+    setPlayer("O");
+    setOriginal("O");
 };
 
 const handleNewGameSingle = () => {
@@ -145,23 +241,59 @@ const handleNewGameMulti = () => {
     renderBoard();
 };
 
-const handleRestartGame = () => {
-    setPlaying(false);
+const resetGame = () => {
     boardReset();
     renderBoard();
 };
 
-const handleCellClick = (index) => {
+const handleRestartGame = () => {
+    renderModal("In Progress");
+    openModal();
+};
+
+const handleHumanMove = (index) => {
     if (boardState[index] !== "") {
         return;
     }
     boardCells[index].disabled = true;
-    boardState[index] = isO ? "O" : "X";
+    boardState[index] = player;
     boardCells[index].dataset.clicked = true;
-    setO(!isO);
+    const newPlayer = player === "O" ? "X" : "O";
+    setPlayer(newPlayer);
     renderBoard();
-    if (isSingle) {
+    const result = validateBoard(boardState);
+    console.log(result);
+    if (result !== "In Progress") {
+        updateScore(result);
+        renderModal(result);
+        openModal();
+    }
+
+    if (isSingle && result === "In Progress") {
         setComputer(true);
+    }
+};
+
+const computerMove = () => {
+    const openIndices = [];
+    boardState.forEach((cell, index) => {
+        if (cell === "") {
+            openIndices.push(index);
+        }
+    });
+    const randomIndex =
+        openIndices[Math.floor(Math.random() * openIndices.length)];
+    boardState[randomIndex] = player;
+    boardCells[randomIndex].dataset.clicked = true;
+    const newPlayer = player === "O" ? "X" : "O";
+    setPlayer(newPlayer);
+    renderBoard();
+    enableBoard();
+    const result = validateBoard(boardState);
+    if (result !== "In Progress") {
+        updateScore(result);
+        renderModal(result);
+        openModal();
     }
 };
 
@@ -173,5 +305,5 @@ newGameMulti.addEventListener("click", handleNewGameMulti);
 restartGame.addEventListener("click", handleRestartGame);
 
 boardCells.forEach((cell, index) => {
-    cell.addEventListener("click", () => handleCellClick(index));
+    cell.addEventListener("click", () => handleHumanMove(index));
 });

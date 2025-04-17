@@ -19,7 +19,7 @@
             rel="stylesheet"
         />
         <link rel="stylesheet" href="style.css" />
-        <script src="script.js" defer></script>
+        <script type="module" src="script.js" defer></script>
     </head>
     <body>
         <main>
@@ -44,7 +44,11 @@
                 <div class="new__middle main-shadow">
                     <p class="new__player text-xs">Pick player 1's mark</p>
                     <div class="new__toggle">
-                        <button id="toggle-x" class="new__toggle--button" data-selected="false">
+                        <button
+                            id="toggle-x"
+                            class="new__toggle--button"
+                            data-selected="false"
+                        >
                             <img
                                 id="toggle-x-icon"
                                 class="new__toggle--icon"
@@ -68,13 +72,22 @@
                             />
                         </button>
                     </div>
-                    <p class="new__symbol text-body">Remember: <span id="choose-x" class="hidden">X</span><span id="choose-o">O</span> goes first</p>
+                    <p class="new__symbol text-body">
+                        Remember: <span id="choose-x" class="hidden">X</span
+                        ><span id="choose-o">O</span> goes first
+                    </p>
                 </div>
                 <div class="new__bottom">
-                    <button id="new-game-single" class="new__bottom--single text-xs yellow-shadow">
+                    <button
+                        id="new-game-single"
+                        class="new__bottom--single text-xs yellow-shadow"
+                    >
                         New Game (vs CPU)
                     </button>
-                    <button id="new-game-multi" class="new__bottom--multi text-xs blue-shadow">
+                    <button
+                        id="new-game-multi"
+                        class="new__bottom--multi text-xs blue-shadow"
+                    >
                         New Game (vs player)
                     </button>
                 </div>
@@ -177,31 +190,9 @@
         </main>
         <dialog id="modal" class="modal">
             <div class="modal__content">
-                <div id="modal-outcome">
-                    <p>
-                        <span id="modal-single-loss">Oh no, you lost</span>
-                        <span id="modal-single-win">You won!</span>
-                        <span id="modal-multi-p1">Player 1 wins!</span>
-                        <span id="modal-multi-p2">Player 2 wins!</span>
-                    </p>
-                    <div>
-                        <img src="/assets/icon-x.svg" alt="X" />
-                        <img src="/assets/icon-o.svg" alt="O" />
-                        <p>Takes the round</p>
-                    </div>
-                </div>
-                <div id="modal-tied">
-                    <p>Round tied</p>
-                </div>
                 <div>
-                    <div id="modal-outcome-buttons">
-                        <button id="modal-quit">Quit</button>
-                        <button id="modal-next-round">Next round</button>
-                    </div>
-                    <div id="modal-restart-buttons">
-                        <button id="modal-cancel">No, cancel</button>
-                        <button id="modal-restart">Yes, restart</button>
-                    </div>
+                    <div id="modal-outcome"></div>
+                    <div id="modal-buttons"></div>
                 </div>
             </div>
         </dialog>
