@@ -14,6 +14,8 @@ const turnO = document.getElementById("turn-o");
 const restartGame = document.getElementById("restart-game");
 const board = document.getElementById("board");
 const boardCells = [...board.children];
+const xLabel = document.getElementById("x-label");
+const oLabel = document.getElementById("o-label");
 
 const modal = document.getElementById("modal");
 const modalOutcome = document.getElementById("modal-outcome");
@@ -109,12 +111,12 @@ const multiEndStates = {
 
 const renderModal = (outcome) => {
     if (outcome === "In Progress") {
-        modalOutcome.innerHTML = `<span>Restart Game?</span>`;
+        modalOutcome.innerHTML = `<span class="modal__outcome--restart">Restart Game?</span>`;
         modalButtons.innerHTML = `
-            <button onclick="handleCancel()">
+            <button class="modal__button silver gray-shadow" onclick="handleCancel()">
                 No, cancel
             </button>
-            <button onclick="handleRestart()">
+            <button class="modal__button light-yellow yellow-shadow-sm" onclick="handleRestart()">
                 Yes, restart
             </button>
         `;
@@ -144,10 +146,10 @@ const renderModal = (outcome) => {
         }
 
         modalButtons.innerHTML = `
-            <button onclick="handleQuit()">
+            <button class="modal__button silver gray-shadow" onclick="handleQuit()">
                 Quit
             </button>
-            <button onclick="handleNextRound()">
+            <button class="modal__button light-yellow yellow-shadow-sm" onclick="handleNextRound()">
                 Next round
             </button>
         `;
@@ -162,10 +164,25 @@ const closeModal = () => {
     modal.close();
 };
 
-const renderScoreBoard = () => {};
-
 const setOriginal = (o) => {
     original = o;
+    if (original === "O") {
+        if (isSingle) {
+            xLabel.innerHTML = "X (CPU)";
+            oLabel.innerHTML = "O (YOU)";
+        } else {
+            xLabel.innerHTML = "X (P2)";
+            oLabel.innerHTML = "O (P1)";
+        }
+    } else {
+        if (isSingle) {
+            xLabel.innerHTML = "X (YOU)";
+            oLabel.innerHTML = "O (CPU)";
+        } else {
+            xLabel.innerHTML = "X (P1)";
+            oLabel.innerHTML = "O (P2)";
+        }
+    }
 };
 
 const setPlayer = (newPlayer) => {
@@ -216,7 +233,7 @@ const setComputer = (computer) => {
 
 const updateScore = (score) => {
     scores[score]++;
-    renderScoreBoard();
+    // renderScoreBoard();
 };
 
 const handleToggleX = () => {
@@ -231,12 +248,14 @@ const handleToggleO = () => {
 
 const handleNewGameSingle = () => {
     setSingle(true);
+    setOriginal(original);
     setPlaying(true);
     renderBoard();
 };
 
 const handleNewGameMulti = () => {
     setSingle(false);
+    setOriginal(original);
     setPlaying(true);
     renderBoard();
 };
