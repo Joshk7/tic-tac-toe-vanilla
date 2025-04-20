@@ -16,6 +16,9 @@ const board = document.getElementById("board");
 const boardCells = [...board.children];
 const xLabel = document.getElementById("x-label");
 const oLabel = document.getElementById("o-label");
+const xScore = document.getElementById("x-score");
+const oScore = document.getElementById("o-score");
+const tieScore = document.getElementById("tie-score");
 
 const modal = document.getElementById("modal");
 const modalContent = document.getElementById("modal-content");
@@ -41,11 +44,9 @@ let isSingle = true;
 let isPlaying = false;
 let isComputer = false;
 const boardState = ["", "", "", "", "", "", "", "", ""];
-const scores = {
-    X: 0,
-    O: 0,
-    Tie: 0,
-};
+let x = 0;
+let o = 0;
+let tie = 0;
 
 const filledTags = {
     X: "/assets/icon-x.svg",
@@ -163,19 +164,19 @@ const setOriginal = (o) => {
     original = o;
     if (original === "O") {
         if (isSingle) {
-            xLabel.innerHTML = "X (CPU)";
-            oLabel.innerHTML = "O (YOU)";
+            xLabel.textContent = "(CPU)";
+            oLabel.textContent = "(YOU)";
         } else {
-            xLabel.innerHTML = "X (P2)";
-            oLabel.innerHTML = "O (P1)";
+            xLabel.textContent = "(P2)";
+            oLabel.textContent = "(P1)";
         }
     } else {
         if (isSingle) {
-            xLabel.innerHTML = "X (YOU)";
-            oLabel.innerHTML = "O (CPU)";
+            xLabel.textContent = "(YOU)";
+            oLabel.textContent = "(CPU)";
         } else {
-            xLabel.innerHTML = "X (P1)";
-            oLabel.innerHTML = "O (P2)";
+            xLabel.textContent = "(P1)";
+            oLabel.textContent = "(P2)";
         }
     }
 
@@ -242,9 +243,33 @@ const setComputer = (computer) => {
     }
 };
 
-const updateScore = (score) => {
-    scores[score]++;
-    // renderScoreBoard();
+const setX = (score) => {
+    x = score;
+    xScore.textContent = x;
+};
+
+const setO = (score) => {
+    o = score;
+    oScore.textContent = o;
+};
+
+const setTie = (score) => {
+    tie = score;
+    tieScore.textContent = tie;
+};
+
+const updateScore = (result) => {
+    if (result === "X") {
+        setX(x + 1);
+    }
+
+    if (result === "O") {
+        setO(o + 1);
+    }
+
+    if (result === "Tie") {
+        setTie(tie + 1);
+    }
 };
 
 const handleToggleX = () => {
