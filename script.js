@@ -28,7 +28,12 @@ const outcomeIcon = document.getElementById("outcome-icon");
 const outcomeColor = document.getElementById("outcome-color");
 
 const modalButtonsRestart = document.getElementById("modal-buttons-restart");
+const modalCancel = document.getElementById("modal-cancel");
+const modalRestart = document.getElementById("modal-restart");
+
 const modalButtonsOutcome = document.getElementById("modal-buttons-outcome");
+const modalQuit = document.getElementById("modal-quit");
+const modalNext = document.getElementById("modal-next");
 
 let original = "O";
 let player = "O";
@@ -173,6 +178,22 @@ const setOriginal = (o) => {
             oLabel.innerHTML = "O (P2)";
         }
     }
+
+    if (original === "O") {
+        toggleX.dataset.selected = false;
+        toggleO.dataset.selected = true;
+        chooseX.classList.add("hidden");
+        chooseO.classList.remove("hidden");
+        turnX.classList.add("hidden");
+        turnO.classList.remove("hidden");
+    } else {
+        toggleX.dataset.selected = true;
+        toggleO.dataset.selected = false;
+        chooseX.classList.remove("hidden");
+        chooseO.classList.add("hidden");
+        turnX.classList.remove("hidden");
+        turnO.classList.add("hidden");
+    }
 };
 
 const setPlayer = (newPlayer) => {
@@ -227,13 +248,13 @@ const updateScore = (score) => {
 };
 
 const handleToggleX = () => {
-    setPlayer("X");
     setOriginal("X");
+    setPlayer("X");
 };
 
 const handleToggleO = () => {
-    setPlayer("O");
     setOriginal("O");
+    setPlayer("O");
 };
 
 const handleNewGameSingle = () => {
@@ -305,6 +326,29 @@ const computerMove = () => {
     }
 };
 
+const handleModalCancel = () => {
+    closeModal();
+};
+
+const handleModalRestart = () => {
+    resetGame();
+    setPlayer(original);
+    closeModal();
+};
+
+const handleModalQuit = () => {
+    setPlayer(original);
+    resetGame();
+    setPlaying(false);
+    closeModal();
+};
+
+const handleModalNext = () => {
+    setPlayer(original);
+    resetGame();
+    closeModal();
+};
+
 toggleX.addEventListener("click", handleToggleX);
 toggleO.addEventListener("click", handleToggleO);
 newGameSingle.addEventListener("click", handleNewGameSingle);
@@ -315,3 +359,9 @@ restartGame.addEventListener("click", handleRestartGame);
 boardCells.forEach((cell, index) => {
     cell.addEventListener("click", () => handleHumanMove(index));
 });
+
+modalCancel.addEventListener("click", handleModalCancel);
+modalRestart.addEventListener("click", handleModalRestart);
+
+modalQuit.addEventListener("click", handleModalQuit);
+modalNext.addEventListener("click", handleModalNext);
