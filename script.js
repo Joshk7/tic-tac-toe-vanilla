@@ -18,8 +18,17 @@ const xLabel = document.getElementById("x-label");
 const oLabel = document.getElementById("o-label");
 
 const modal = document.getElementById("modal");
-const modalOutcome = document.getElementById("modal-outcome");
-const modalButtons = document.getElementById("modal-buttons");
+const modalContent = document.getElementById("modal-content");
+
+const modalOutcomeRestart = document.getElementById("modal-outcome-restart");
+const modalOutcomeTie = document.getElementById("modal-outcome-tie");
+const modalOutcomeWinner = document.getElementById("modal-outcome-winner");
+const outcomeResult = document.getElementById("outcome-result");
+const outcomeIcon = document.getElementById("outcome-icon");
+const outcomeColor = document.getElementById("outcome-color");
+
+const modalButtonsRestart = document.getElementById("modal-buttons-restart");
+const modalButtonsOutcome = document.getElementById("modal-buttons-outcome");
 
 let original = "O";
 let player = "O";
@@ -46,12 +55,19 @@ const outlineTags = {
 const renderBoard = () => {
     boardCells.forEach((cell, index) => {
         if (boardState[index]) {
-            cell.innerHTML = `<img src="${
-                filledTags[boardState[index]]
-            }" alt="${boardState[index]}" />`;
+            cell.innerHTML = `
+                <img 
+                    src="${filledTags[boardState[index]]}" 
+                    alt="${boardState[index]}" 
+                />
+            `;
         } else {
             cell.innerHTML = `
-                <img class="board__button--outline" src="${outlineTags[player]}" alt="${player}" />
+                <img 
+                    class="board__button--outline" 
+                    src="${outlineTags[player]}" 
+                    alt="${player}" 
+                />
             `;
         }
     });
@@ -87,72 +103,46 @@ const enableBoard = () => {
     });
 };
 
-const singleEndStates = {
-    X: {
-        X: "You won!",
-        O: "Oh no, you lost...",
-    },
-    O: {
-        X: "Oh no, you lost...",
-        O: "You won!",
-    },
-};
-
-const multiEndStates = {
-    X: {
-        X: "Player 1 wins!",
-        O: "Player 2 wins!",
-    },
-    O: {
-        X: "Player 2 wins!",
-        O: "Player 1 wins!",
-    },
+const resetModal = () => {
+    [...modalContent.children].forEach((child) => {
+        child.classList.add("hidden");
+    });
 };
 
 const renderModal = (outcome) => {
+    resetModal();
     if (outcome === "In Progress") {
-        modalOutcome.innerHTML = `<span class="modal__outcome--restart">Restart Game?</span>`;
-        modalButtons.innerHTML = `
-            <button class="modal__button silver gray-shadow" onclick="handleCancel()">
-                No, cancel
-            </button>
-            <button class="modal__button light-yellow yellow-shadow-sm" onclick="handleRestart()">
-                Yes, restart
-            </button>
-        `;
+        modalOutcomeRestart.classList.remove("hidden");
+        modalButtonsRestart.classList.remove("hidden");
     } else {
+        modalButtonsOutcome.classList.remove("hidden");
         if (outcome === "Tie") {
-            modalOutcome.innerHTML = `
-                <span>Round Tied</span>
-            `;
+            modalOutcomeTie.classList.remove("hidden");
         } else {
+            modalOutcomeWinner.classList.remove("hidden");
             if (isSingle) {
-                modalOutcome.innerHTML = `
-                    <span>${singleEndStates[original][outcome]}</span>
-                    <div>
-                    <img src="${filledTags[outcome]}" alt="${outcome}" />
-                        <p>Takes the round</p>
-                    </div>
-                `;
+                if (original === outcome) {
+                    outcomeResult.textContent = "You won!";
+                } else {
+                    outcomeResult.textContent = "Oh no, you lost...";
+                }
             } else {
-                modalOutcome.innerHTML = `
-                    <span>${multiEndStates[original][outcome]}</span>
-                    <div>
-                        <img src="${filledTags[outcome]}" alt="${outcome}" />
-                        <p>Takes the round</p>
-                    </div>
-                `;
+                if (original === outcome) {
+                    outcomeResult.textContent = "Player 1 wins!";
+                } else {
+                    outcomeResult.textContent = "Player 2 wins!";
+                }
+            }
+            outcomeIcon.src = filledTags[outcome];
+            outcomeIcon.alt = outcome;
+            if (outcome === "X") {
+                outcomeColor.classList.remove("light-yellow-text");
+                outcomeColor.classList.add("light-blue-text");
+            } else {
+                outcomeColor.classList.remove("light-blue-text");
+                outcomeColor.classList.add("light-yellow-text");
             }
         }
-
-        modalButtons.innerHTML = `
-            <button class="modal__button silver gray-shadow" onclick="handleQuit()">
-                Quit
-            </button>
-            <button class="modal__button light-yellow yellow-shadow-sm" onclick="handleNextRound()">
-                Next round
-            </button>
-        `;
     }
 };
 
@@ -281,7 +271,6 @@ const handleHumanMove = (index) => {
     setPlayer(newPlayer);
     renderBoard();
     const result = validateBoard(boardState);
-    console.log(result);
     if (result !== "In Progress") {
         updateScore(result);
         renderModal(result);

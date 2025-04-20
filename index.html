@@ -155,7 +155,7 @@
                     </div>
                     <div class="scoreboard">
                         <div class="scoreboard__card light-blue">
-                            <span id="x-label">X</span>
+                            <span id="x-label"> X </span>
                             <p id="x-score" class="score">0</p>
                         </div>
                         <div class="scoreboard__card silver-background">
@@ -171,9 +171,45 @@
             </section>
         </main>
         <dialog id="modal" class="modal">
-            <div class="modal__content">
-                <div id="modal-outcome"></div>
-                <div id="modal-buttons" class="modal__buttons"></div>
+            <div id="modal-content" class="modal__content">
+                <div id="modal-outcome-restart">
+                    <span class="modal__outcome--title">Restart Game?</span>
+                </div>
+
+                <div id="modal-outcome-tie">
+                    <span class="modal__outcome--title">Round Tied</span>
+                </div>
+
+                <div id="modal-outcome-winner" class="modal__winner">
+                    <span
+                        id="outcome-result"
+                        class="modal__outcome--description"
+                    >
+                    </span>
+                    <div class="modal__symbol">
+                        <img id="outcome-icon" class="modal__symbol--icon" width="30" height="30" />
+                        <span id="outcome-color" class="modal__outcome--title">
+                            Takes the round
+                        </span>
+                    </div>
+                </div>
+
+                <div id="modal-buttons-restart" class="modal__buttons">
+                    <button class="modal__button silver gray-shadow">
+                        No, cancel
+                    </button>
+                    <button class="modal__button light-yellow yellow-shadow-sm">
+                        Yes, restart
+                    </button>
+                </div>
+                <div id="modal-buttons-outcome" class="modal__buttons">
+                    <button class="modal__button silver gray-shadow">
+                        Quit
+                    </button>
+                    <button class="modal__button light-yellow yellow-shadow-sm">
+                        Next Round
+                    </button>
+                </div>
             </div>
         </dialog>
     </body>
