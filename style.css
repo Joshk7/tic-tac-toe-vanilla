@@ -437,6 +437,28 @@ main {
     border-radius: 0.625rem;
     border: none;
     color: var(--dark-navy);
+    cursor: pointer;
+}
+
+.modal__silver {
+    background: var(--silver);
+}
+
+.modal__silver:hover {
+    background: var(--silver-hover);
+}
+
+.modal__yellow {
+    background: var(--light-yellow);
+}
+
+.modal__yellow:hover {
+    background: var(--light-yellow-hover);
+}
+
+.modal__button:hover {
+    box-shadow: none;
+    transform: translateY(0.25rem);
 }
 
 .modal::backdrop {
@@ -459,10 +481,6 @@ main {
 
 .silver-background {
     background: var(--silver);
-}
-
-.light-blue-text {
-    color: var(--light-blue);
 }
 
 .light-yellow-text {

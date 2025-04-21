@@ -13,7 +13,8 @@ const turnX = document.getElementById("turn-x");
 const turnO = document.getElementById("turn-o");
 const restartGame = document.getElementById("restart-game");
 const board = document.getElementById("board");
-const boardCells = [...board.children];
+const boardCells = board.querySelectorAll("button");
+const boardIcons = board.querySelectorAll("img");
 const xLabel = document.getElementById("x-label");
 const oLabel = document.getElementById("o-label");
 const xScore = document.getElementById("x-score");
@@ -48,6 +49,43 @@ let x = 0;
 let o = 0;
 let tie = 0;
 
+const saveGameState = () => {
+    const gameState = {
+        boardState: boardState,
+        scores: { x, o, tie },
+        isSingle: isSingle,
+        player: player,
+        original: original,
+        isPlaying: isPlaying,
+    };
+    localStorage.setItem("gameState", JSON.stringify(gameState));
+};
+
+const loadGameState = () => {
+    const savedState = localStorage.getItem("gameState");
+    console.log(savedState);
+    if (savedState) {
+        const gameState = JSON.parse(savedState);
+
+        gameState.boardState.forEach((value, index) => {
+            boardState[index] = value;
+        });
+
+        setX(gameState.scores.x);
+        setO(gameState.scores.o);
+        setTie(gameState.scores.tie);
+
+        setSingle(gameState.isSingle);
+        setPlayer(gameState.player);
+        setOriginal(gameState.original);
+        setPlaying(gameState.isPlaying);
+
+        if (gameState.isPlaying) {
+            renderBoard();
+        }
+    }
+};
+
 const filledTags = {
     X: "/assets/icon-x.svg",
     O: "/assets/icon-o.svg",
@@ -59,30 +97,24 @@ const outlineTags = {
 };
 
 const renderBoard = () => {
-    boardCells.forEach((cell, index) => {
+    boardIcons.forEach((cell, index) => {
+        cell.classList.remove("hidden");
         if (boardState[index]) {
-            cell.innerHTML = `
-                <img 
-                    src="${filledTags[boardState[index]]}" 
-                    alt="${boardState[index]}" 
-                />
-            `;
+            cell.classList.remove("board__button--outline");
+            cell.src = filledTags[boardState[index]];
+            cell.alt = boardState[index];
         } else {
-            cell.innerHTML = `
-                <img 
-                    class="board__button--outline" 
-                    src="${outlineTags[player]}" 
-                    alt="${player}" 
-                />
-            `;
+            cell.classList.add("board__button--outline");
+            cell.src = outlineTags[player];
+            cell.alt = player;
         }
     });
 };
 
 const removeOutlines = () => {
-    boardCells.forEach((cell, index) => {
+    boardIcons.forEach((cell, index) => {
         if (boardState[index] === "") {
-            cell.innerHTML = "";
+            cell.classList.add("hidden");
         }
     });
 };
@@ -270,6 +302,7 @@ const updateScore = (result) => {
     if (result === "Tie") {
         setTie(tie + 1);
     }
+    saveGameState();
 };
 
 const handleToggleX = () => {
@@ -316,6 +349,7 @@ const handleHumanMove = (index) => {
     const newPlayer = player === "O" ? "X" : "O";
     setPlayer(newPlayer);
     renderBoard();
+    saveGameState();
     const result = validateBoard(boardState);
     if (result !== "In Progress") {
         updateScore(result);
@@ -342,6 +376,7 @@ const computerMove = () => {
     const newPlayer = player === "O" ? "X" : "O";
     setPlayer(newPlayer);
     renderBoard();
+    saveGameState();
     enableBoard();
     const result = validateBoard(boardState);
     if (result !== "In Progress") {
@@ -358,6 +393,7 @@ const handleModalCancel = () => {
 const handleModalRestart = () => {
     resetGame();
     setPlayer(original);
+    saveGameState();
     closeModal();
 };
 
@@ -365,14 +401,18 @@ const handleModalQuit = () => {
     setPlayer(original);
     resetGame();
     setPlaying(false);
+    saveGameState();
     closeModal();
 };
 
 const handleModalNext = () => {
     setPlayer(original);
     resetGame();
+    saveGameState();
     closeModal();
 };
+
+document.addEventListener("DOMContentLoaded", loadGameState);
 
 toggleX.addEventListener("click", handleToggleX);
 toggleO.addEventListener("click", handleToggleO);
