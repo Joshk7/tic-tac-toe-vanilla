@@ -491,6 +491,10 @@ main {
     display: none;
 }
 
+.initial-hidden {
+    display: none;
+}
+
 @media screen and (min-width: 24rem) {
     .new {
         row-gap: 2.5rem;

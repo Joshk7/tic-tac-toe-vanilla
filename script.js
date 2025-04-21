@@ -62,8 +62,11 @@ const saveGameState = () => {
 };
 
 const loadGameState = () => {
+    newGameMenu.classList.remove("initial-hidden");
+    playGame.classList.remove("initial-hidden");
+
     const savedState = localStorage.getItem("gameState");
-    console.log(savedState);
+
     if (savedState) {
         const gameState = JSON.parse(savedState);
 
